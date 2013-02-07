@@ -38,7 +38,6 @@ function compile (input, macros) {
                 return macro(tree, transform);
             }
         }
-
         throw new Error('Not a macro:' + tree[0]);
     }
 
@@ -190,7 +189,6 @@ var helper = {
                     code + '\n' +
                     'return __out.join("");'
             );
-
         }
     },
 
@@ -211,7 +209,6 @@ var helper = {
             var path = helper.parseArg(tree) || '';
             return '__out.push(resolve(path + "' + path + '"));';
         },
-
 
         /**
          * Checks if a path exists
@@ -269,7 +266,6 @@ var helper = {
          */
         out: helper.transformTree
     };
-
 
 /**
  * Runtime method: resolving a path in the data
