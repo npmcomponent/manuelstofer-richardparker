@@ -81,13 +81,13 @@ $ richardparker -a foo.html         # compile test.html and output as amd module
 
 ```Javascript
 
-var richard     = require('richardparker'),
+var richard = require('richardparker'),
 
-    // compile the template to a javascript function
-    template    = richard.compile('{has .title <h1>{.title}</h1>}'),
-    
     // render directly
-    html        = richard.render('{has .title <h1>{.title}</h1>}', {name: 'foo'});
+    html = richard('{has .title <h1>{.title}</h1>}', {name: 'foo'});
+
+    // compile to javascript function
+    template = richard.compile('{has .title <h1>{.title}</h1>}'),
 
 ```
 
