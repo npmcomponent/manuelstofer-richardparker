@@ -275,7 +275,12 @@ var helper = {
  */
 function resolve (path) {
     var obj = data,
-        parts = path.replace(/^[\.\[\]]/, '').replace(/[\]]$/, '').split(/[\.\[\]]+/);
+        parts = path
+            .replace(/^[\.\[\]]/, '')
+            .replace(/[\]]$/, '')
+            .split(/[\.\[\]]+/)
+            .filter(function (part) { return part !== ''; });
+
     while (parts.length > 0 && obj[parts[0]]) {
         obj = obj[parts[0]];
         parts.shift();

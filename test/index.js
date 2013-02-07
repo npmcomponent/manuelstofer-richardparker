@@ -48,7 +48,7 @@ describe('each', function () {
 
     it('should iterate over the root attributes of an object', function () {
         var richard = {name: 'richard parker', age: 12};
-        render('{each . {.}}', richard).should.equal('richard parker 12 ');
+        render('{each . {.} }', richard).should.equal('richard parker 12 ');
     });
 });
 
