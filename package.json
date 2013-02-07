@@ -14,5 +14,8 @@
     "bin": {
         "richardparker": "bin/richardparker.js"
     },
-    "main": "index"
+    "main": "index",
+    "scripts": { 
+        "test": "make test"
+    }
 }
