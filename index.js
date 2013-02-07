@@ -311,10 +311,3 @@ function each (obj, iterator) {
         }
     }
 }
-
-/*
-
-console.log('var x = ');
-console.log(compile(template));
-console.log('console.log(x({pages: [{title: "über uns"}, {title: "jimmyes tablet page"}, {title: "table simi!"}]}));');
-*/
