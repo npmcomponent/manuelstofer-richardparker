@@ -17,12 +17,12 @@ Its kind of Mustache in s-expressions.
 Template:
 
 ```HTML
-{has .tigers
-  <ul>
-    {each .tigers
-      <li x-bind="{path .name}">{.name}</li>
+{has .fields
+  <form>
+    {each .fields
+      {.label}: <input type="text" x-bind="{path .name}" value="{.name}">
     }
-  </ul>
+  </form>
 }
 ```
 
@@ -30,9 +30,9 @@ Data:
 
 ```Javascript
 {
-  tigers: [
-    {name: 'Richard Parker'}
-    {name: 'Thirsty'}
+  fields: [
+    {label: 'Hunter', name: 'Thirsty'},
+    {label: 'Tiger', name: 'Richard Parker'}
   ]
 }
 ```
@@ -40,10 +40,10 @@ Data:
 Output:
 
 ```HTML
-<ul>
-  <li x-bind=".tigers[0].title">Richard Parker</li>
-  <li x-bind=".tigers[1].title">Thirsty</li>
-</ul>
+<form>
+  Hunter: <input type="text" x-bind=".fields[0].name" value="Thirsty">
+  Tiger: <input type="text" x-bind=".fields[1].name" value="Richard Parker">
+</form>
 ```
 
 The possibility to output the current path is intended to be used for two way data bindings.
