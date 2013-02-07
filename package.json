@@ -1,6 +1,6 @@
 {
     "name": "richardparker",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "description": "Simple template engine for two way bindings",
     "keywords": ["template", "engine", "two", "way", "binding"],
     "author": "Manuel Stofer <manuel@takimata.ch>",
@@ -15,7 +15,7 @@
         "richardparker": "bin/richardparker.js"
     },
     "main": "index",
-    "scripts": { 
+    "scripts": {
         "test": "make test"
     }
 }
