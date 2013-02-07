@@ -253,6 +253,18 @@ var helper = {
         },
 
         /**
+         * Outputs the current path
+         * for example:
+         * {each .foo {path .bar}, } -> .foo[0].bar, .foo[1].bar ...
+         * @param tree
+         * @return {String}
+         */
+        path: function (tree) {
+            var path = helper.parseArg(tree);
+            return '__out.push(path + "' + path + '");';
+        },
+
+        /**
          * Output ast, for internal use
          */
         out: helper.transformTree

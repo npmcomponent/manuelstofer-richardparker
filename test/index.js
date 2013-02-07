@@ -55,7 +55,7 @@ describe('each', function () {
 describe('path', function () {
 
     it('path should output the current path in the data structure', function () {
-        var site = {bar: ['foo']};
-        render('{each .bar {path .foo}}', site).should.equal('.bar.foo');
+        var site = {bar: [{foo: 3}]};
+        render('{each .bar {path .foo}}', site).should.equal('.bar[0].foo');
     });
 });
