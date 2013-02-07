@@ -1,6 +1,7 @@
 # Richard Parker
 
 Simple template engine for two way bindings.
+![Travis](https://api.travis-ci.org/manuelstofer/richardparker.png)
 
 ![Richard Parker](resources/richard-parker.jpg)
 
