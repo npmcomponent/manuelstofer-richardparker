@@ -1,7 +1,7 @@
 {
     "name": "richardparker",
     "version": "0.0.1",
-    "description": "Simple template engine designed for two way bindings",
+    "description": "Simple template engine for two way bindings",
     "keywords": ["template", "engine", "two", "way", "binding"],
     "scripts": ["index.js"]
 }
