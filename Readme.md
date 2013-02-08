@@ -8,7 +8,7 @@ Simple template engine for two way bindings.
 > A Tiger? Richard Parker was a Tiger?
 > Yeah! He got his name through a clerical error. A Hunter caught him when drinking from a
 > stream when he was a cub, and named him Thirsty. When Thirsty got too big, the hunter sold
-> him to our zoo, but the names got switched on the paperwork. The hunter was listed as 
+> him to our zoo, but the names got switched on the paperwork. The hunter was listed as
 > Thirsty and the tiger was called Richard Parker. We laughed about it and the name stuck.
 
 ## Syntax
@@ -47,7 +47,10 @@ Output:
 </form>
 ```
 
-The possibility to output the current path is intended to be used for two way data bindings.
+In the example above the x-bind attribute is set to the path in the names in
+the data object. This is intended to be used for two way data bindings.
+The value of the input field can easily be pushed back into the data object
+when it changed.
 
 ## Installation
 
@@ -55,7 +58,6 @@ Using npm
 
 ```
 $ npm install richardparker
-
 ```
 
 Using Component
@@ -66,7 +68,7 @@ $ component install richardparker
 
 ## Usage
 
-The package can be consumed as a [component](http://github.com/component/component) or as a 
+The package can be consumed as a [component](http://github.com/component/component) or as a
 [npm](http://npmjs.org/) module. For use on the server and on the client.
 
 ### Command-line
