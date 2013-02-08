@@ -1,10 +1,8 @@
 /*global describe, it*/
-
 if (typeof render == 'undefined') {
     var render = require('..'),
         chai = require('chai');
 }
-
 
 chai.should();
 
@@ -61,6 +59,17 @@ describe('path', function () {
 
     it('path should output the current path in the data structure', function () {
         var site = {bar: [{foo: 3}]};
-        render('{each .bar {path .foo}}', site).should.equal('.bar[0].foo');
+        render('{each .bar {path .foo}}', site).should.equal('.bar.0.foo');
+    });
+});
+
+describe('->', function () {
+
+    it('-> should move down in path', function () {
+        var site = {person: {name: 'Thirsty'}};
+        render('{-> .person.name {path}}', site).should.equal('.person.name');
+        render('{-> .person.name {path .}}', site).should.equal('.person.name');
+        render('{-> .person.name {.}}', site).should.equal('Thirsty');
+        render('{-> .person {.name}}', site).should.equal('Thirsty');
     });
 });

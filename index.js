@@ -163,6 +163,13 @@ var helper = {
             return arg;
         },
 
+        parsePath: function (tree) {
+            return (helper.parseArg(tree) || '')
+                .replace(/(\["?|"?])/g, '.')    // . notation for objects and arrays
+                .replace(/^(?=[^\.])/g, '.')    // always prefixed with .
+                .replace(/\.$/g, '');           // never ending with .
+        },
+
         /**
          * Creates a closure for the path.
          *  ->  Useful when modifying the current path in a macro
@@ -206,8 +213,23 @@ var helper = {
          * @return {String}
          */
         '.': function (tree) {
-            var path = helper.parseArg(tree) || '';
+            var path = helper.parsePath(tree);
             return '__out.push(resolve(path + "' + path + '"));';
+        },
+
+        /**
+         * Moves down in path
+         * {-> .person.name {path}} -> .person.name
+         * @param tree
+         * @param transform
+         * @return {String}
+         */
+        '->': function (tree, transform) {
+            var path = helper.parsePath(tree);
+            return helper.keepPath(
+                'path += "' + helper.escapeJS(path) + '";\n' +
+                helper.transformTree(tree, transform) + '\n'
+            );
         },
 
         /**
@@ -220,7 +242,7 @@ var helper = {
          * @return {String}
          */
         has: function (tree, transform) {
-            var path = helper.parseArg(tree);
+            var path = helper.parsePath(tree);
             return  'if (typeof resolve(path + "' + path + '") !== "undefined") {\n' +
                         helper.transformTree(tree, transform) + '\n' +
                     '}';
@@ -240,11 +262,11 @@ var helper = {
          * @return {String}
          */
         each: function (tree, transform) {
-            var path = helper.parseArg(tree);
+            var path = helper.parsePath(tree);
             return helper.keepPath(
                 'path += "' + path + '";\n' +
                 'each(resolve("' + path + '"), function (__itemPath) {' +
-                    helper.keepPath('path += "[" + __itemPath + "]"; ' + helper.transformTree(tree, transform)) + '\n' +
+                    helper.keepPath('path += "." + __itemPath; ' + helper.transformTree(tree, transform)) + '\n' +
                 '});'
             );
         },
@@ -257,7 +279,7 @@ var helper = {
          * @return {String}
          */
         path: function (tree) {
-            var path = helper.parseArg(tree);
+            var path = helper.parsePath(tree);
             return '__out.push(path + "' + path + '");';
         },
 
@@ -276,9 +298,7 @@ var helper = {
 function resolve (path) {
     var obj = data,
         parts = path
-            .replace(/^[\.\[\]]/, '')
-            .replace(/[\]]$/, '')
-            .split(/[\.\[\]]+/)
+            .split(/\./)
             .filter(function (part) { return part !== ''; });
 
     while (parts.length > 0 && obj[parts[0]]) {
