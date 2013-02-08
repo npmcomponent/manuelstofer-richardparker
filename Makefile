@@ -1,7 +1,7 @@
-
-test:
-
+build:
 	@echo component build
+
+test: build
 	@./node_modules/.bin/component-build \
 
 	@echo test with mocha
@@ -12,4 +12,4 @@ test:
 	@echo test with phantomjs
 	@./node_modules/mocha-phantomjs/bin/mocha-phantomjs test/test-runner.html
 
-.PHONY: test
+.PHONY: test build
