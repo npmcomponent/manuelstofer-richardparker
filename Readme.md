@@ -42,15 +42,16 @@ Output:
 
 ```HTML
 <form>
-  Hunter: <input type="text" x-bind=".fields[0].name" value="Thirsty">
-  Tiger: <input type="text" x-bind=".fields[1].name" value="Richard Parker">
+  Hunter: <input type="text" x-bind=".fields.0.name" value="Thirsty">
+  Tiger: <input type="text" x-bind=".fields.1.name" value="Richard Parker">
 </form>
 ```
 
 In the example above the x-bind attribute is set to the path of the names in
 the data object. This is intended to be used for two way data bindings.
 The value of the input field can easily be pushed back into the data object
-when it changed.
+when it changes.
+
 
 ## Installation
 
@@ -69,7 +70,7 @@ $ component install richardparker
 ## Usage
 
 The package can be consumed as a [component](http://github.com/component/component) or as a
-[npm](http://npmjs.org/) module. For use on the server and on the client.
+[npm](http://npmjs.org/) module.
 
 ### Command-line
 
