@@ -47,7 +47,7 @@ Output:
 </form>
 ```
 
-In the example above the x-bind attribute is set to the path in the names in
+In the example above the x-bind attribute is set to the path of the names in
 the data object. This is intended to be used for two way data bindings.
 The value of the input field can easily be pushed back into the data object
 when it changed.
