@@ -1,6 +1,6 @@
 {
     "name": "richardparker",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "description": "Simple template engine for two way bindings",
     "keywords": ["template", "engine", "two", "way", "binding"],
     "scripts": ["index.js"]
