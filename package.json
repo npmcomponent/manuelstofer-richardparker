@@ -9,7 +9,9 @@
     },
     "devDependencies": {
         "mocha": "*",
-        "should": "*"
+        "chai": "*",
+        "component": "*",
+        "mocha-phantomjs": "*"
     },
     "bin": {
         "richardparker": "bin/richardparker.js"

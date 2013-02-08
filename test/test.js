@@ -1,7 +1,12 @@
 /*global describe, it*/
-'use strict';
 
-var render = require('..');
+if (typeof render == 'undefined') {
+    var render = require('..'),
+        chai = require('chai');
+}
+
+
+chai.should();
 
 describe('.', function () {
 

@@ -1,13 +1,15 @@
 # Richard Parker
 
 Simple template engine for two way bindings.
+![Travis](https://api.travis-ci.org/manuelstofer/richardparker.png
+
 
 ![Richard Parker](resources/richard-parker.jpg)
 
 > A Tiger? Richard Parker was a Tiger?
 > Yeah! He got his name through a clerical error. A Hunter caught him when drinking from a
 > stream when he was a cub, and named him Thirsty. When Thirsty got too big, the hunter sold
-> him to our zoo, but the names got switched on the paperwork. The hunter was listed as 
+> him to our zoo, but the names got switched on the paperwork. The hunter was listed as
 > Thirsty and the tiger was called Richard Parker. We laughed about it and the name stuck.
 
 ## Syntax
@@ -65,7 +67,7 @@ $ component install richardparker
 
 ## Usage
 
-The package can be consumed as a [component](http://github.com/component/component) or as a 
+The package can be consumed as a [component](http://github.com/component/component) or as a
 [npm](http://npmjs.org/) module. For use on the server and on the client.
 
 ### Command-line
