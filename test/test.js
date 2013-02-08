@@ -73,3 +73,33 @@ describe('->', function () {
         render('{-> .person {.name}}', site).should.equal('Thirsty');
     });
 });
+
+
+describe('the example in readme.md', function () {
+
+    it('should be correct except for whitespace', function () {
+        var template =
+                '{has .fields ' +
+                '  <form> ' +
+                '    {each .fields ' +
+                '      {.label}: <input type="text" x-bind="{path .name}" value="{.name}"> ' +
+                '    } ' +
+                '  </form>' +
+                '}',
+
+            data = {
+                fields: [
+                    {label: 'Hunter', name: 'Thirsty'},
+                    {label: 'Tiger', name: 'Richard Parker'}
+                ]
+            },
+
+            output =
+                '<form> ' +
+                '  Hunter: <input type="text" x-bind=".fields.0.name" value="Thirsty"> ' +
+                '  Tiger: <input type="text" x-bind=".fields.1.name" value="Richard Parker"> ' +
+                '</form>';
+
+        render(template, data).replace(/\s/g, '').should.equal(output.replace(/\s/g, ''));
+    });
+});
