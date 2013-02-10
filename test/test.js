@@ -74,6 +74,16 @@ describe('->', function () {
     });
 });
 
+describe('macros', function () {
+
+    it('can add custom macro', function () {
+        var template = '{custom-macro}',
+            macro = {'custom-macro': function () {
+                return render.compile.helper.output('foo');
+            }};
+        render(template, {}, macro).should.equal('foo');
+    });
+});
 
 describe('the example in readme.md', function () {
 
@@ -103,3 +113,5 @@ describe('the example in readme.md', function () {
         render(template, data).replace(/\s/g, '').should.equal(output.replace(/\s/g, ''));
     });
 });
+
+
