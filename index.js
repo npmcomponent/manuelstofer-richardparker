@@ -25,26 +25,18 @@ function render (str, data, macros) {
 function compile (input, macros) {
     macros = macros || {};
 
-    var tree = parse('out' + input),
-        macrosNames = getMacroNames(macros);
+    var tree = parse('out ' + input);
 
     function transform (tree) {
 
-        if (tree.length) {
-            // A newline at the end of an expression and spaces after are removed
-            tree[tree.length - 1] = tree[tree.length - 1].replace(/\n *$/, '');
+        var macroName = helper.parseArg(tree),
+            macro = macros[macroName] || nativeMacros[macroName];
+
+        if (macro) {
+            return macro(tree, transform);
         }
 
-        for (var i = 0; i < macrosNames.length; i++) {
-            var macroName = macrosNames[i],
-                macro = macros[macroName] || nativeMacros[macroName];
-
-            if (tree[0].indexOf(macroName) === 0) {
-                tree[0] = tree[0].slice(macroName.length).replace(/^\s/,'');
-                return macro(tree, transform);
-            }
-        }
-        throw new Error('Not a macro:' + tree[0]);
+        throw new Error('Not a macro:' + macroName);
     }
 
     return helper.wrapTemplate(transform(tree));
@@ -91,20 +83,6 @@ function parse (str) {
     return results;
 }
 
-/**
- * @param macros
- * @return {Array|String}
- */
-function getMacroNames (macros) {
-    var keys = function (obj) {
-        var result = [];
-        each(obj, function (key) {
-           result.push(key);
-        });
-        return result;
-    };
-    return keys(macros).concat(keys(nativeMacros));
-}
 
 /**
  * Some bundled macros
