@@ -70,7 +70,7 @@ $ npm install richardparker
 Using Component
 
 ```
-$ component install richardparker
+$ component install manuelstofer/richardparker
 ```
 
 ## Usage
