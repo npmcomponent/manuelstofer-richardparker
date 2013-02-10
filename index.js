@@ -184,6 +184,25 @@ var nativeMacros = {
 var helper = {
 
     /**
+     * Read until the first white space in the first string of the AST
+     *
+     * @param [tree]
+     * @return {String}
+     */
+    parseArg: function (tree) {
+        var arg = String(/^\S+/.exec(String(tree[0])) || '');
+        tree[0] = tree[0].substr(arg.length).replace(/^\s+/, '');
+        return arg;
+    },
+
+    parsePath: function (tree) {
+        return (helper.parseArg(tree) || '')
+            .replace(/(\["?|"?])/g, '.')    // . notation for objects and arrays
+            .replace(/^(?=[^\.])/g, '.')    // always prefixed with .
+            .replace(/\.$/g, '');           // never ending with .
+    },
+
+    /**
      * Escape a string not to interfere with javascript syntax
      *
      * @param {String} str
@@ -224,25 +243,6 @@ var helper = {
             }
         });
         return out;
-    },
-
-    /**
-     * Read until the first white space in the first string of the AST
-     *
-     * @param [tree]
-     * @return {String}
-     */
-    parseArg: function (tree) {
-        var arg = String(/^\S+/.exec(String(tree[0])) || '');
-        tree[0] = tree[0].substr(arg.length).replace(/^\s+/, '');
-        return arg;
-    },
-
-    parsePath: function (tree) {
-        return (helper.parseArg(tree) || '')
-            .replace(/(\["?|"?])/g, '.')    // . notation for objects and arrays
-            .replace(/^(?=[^\.])/g, '.')    // always prefixed with .
-            .replace(/\.$/g, '');           // never ending with .
     },
 
     /**
