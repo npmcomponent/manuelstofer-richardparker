@@ -55,9 +55,10 @@ Output:
 
 In the example above the x-bind attribute is set to the path of the names in
 the data object. This is intended to be used for two way data bindings.
-The value of the input field can easily be pushed back into the data object
-when it changes.
 
+Richard Parker has no built in data bindings, but the bindings can be done
+with [Pflock](http://github.com/manuelstofer/pflock) which uses the same
+syntax as the {path} macro.
 
 ## Installation
 
