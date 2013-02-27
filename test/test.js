@@ -98,7 +98,7 @@ describe('macros', function () {
                 return render.compile.helper.output('foo');
             }
         };
-        render('{custom-macro}', {}, macro).should.equal('foo');
+        render('{custom-macro}', {}, {macros: macro}).should.equal('foo');
     });
 
     it('two macros can begin with the same name', function () {
@@ -110,8 +110,8 @@ describe('macros', function () {
                 return render.compile.helper.output('foo2');
             }
         };
-        render('{custom-macro}', {}, macro).should.equal('foo');
-        render('{custom-macro2}', {}, macro).should.equal('foo2');
+        render('{custom-macro}', {}, {macros: macro}).should.equal('foo');
+        render('{custom-macro2}', {}, {macros: macro}).should.equal('foo2');
     });
 });
 

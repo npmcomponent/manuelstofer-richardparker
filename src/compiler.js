@@ -11,24 +11,24 @@ exports.compile = compile;
  *
  * @param {String} str
  * @param {Object} data
- * @param {Object} macros
+ * @param {Object} options
  * @return {String}
  */
-function render (str, data, macros) {
-    return compile(str, macros)(data);
+function render (str, data, options) {
+    return compile(str, options)(data);
 }
 
 /**
  * Compile a template to a Javascript
  *
  * @param {String} input
- * @param macros
+ * @param {Object} options
  * @return {*}
  */
-function compile (input, macros) {
-    macros = macros || {};
-
-    var tree = parse('out ' + input);
+function compile (input, options) {
+    options = options || {};
+    var macros = options.macros || {},
+        tree = parse('out ' + input);
 
     function transform (tree) {
 
