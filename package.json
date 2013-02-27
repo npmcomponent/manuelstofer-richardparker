@@ -5,7 +5,8 @@
     "keywords": ["template", "engine", "two", "way", "binding"],
     "author": "Manuel Stofer <manuel@takimata.ch>",
     "dependencies": {
-        "commander": "*"
+        "commander": "*",
+        "walk":      "*"
     },
     "devDependencies": {
         "mocha": "*",

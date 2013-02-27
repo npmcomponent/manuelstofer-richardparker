@@ -3,5 +3,8 @@
     "version": "0.5.0",
     "description": "Simple template engine for two way bindings",
     "keywords": ["template", "engine", "two", "way", "binding"],
-    "scripts": ["index.js"]
+    "scripts": [
+        "index.js",
+        "runtime.js"
+    ]
 }
