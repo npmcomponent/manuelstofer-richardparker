@@ -4,7 +4,8 @@ var program     = require('commander'),
     template    = require('..'),
     fs          = require('fs'),
     walk        = require('walk'),
-    each        = require('../src/runtime').each;
+    runtime     = require('../src/runtime'),
+    each        = runtime.each;
 
 program
     .version(require('../package.json').version)
@@ -13,7 +14,7 @@ program
     .option('-o, --out [file]', 'write compiled template to file')
     .parse(process.argv);
 
-var path    = program.args[0].toString().replace(/\/$/, '');
+var path = program.args[0].toString().replace(/\/$/, '');
 
 try {
     var stats = fs.lstatSync(path);
@@ -36,9 +37,9 @@ try {
  * @param path
  * @return {String}
  */
-function compileFile (path) {
+function compileFile (path, options) {
     var contents = fs.readFileSync(path).toString();
-    return template.compile(contents).toString();
+    return template.compile(contents, options).toString();
 }
 
 /**
@@ -72,20 +73,27 @@ function createDirectoryModule (path) {
             relativePath = relativeRoot + '/' + relativePath;
         }
 
-        templates[relativePath] = compileFile(realPath);
+        templates[relativePath] = compileFile(realPath, {
+            includeRuntime: false,
+            file: realPath
+        });
         next();
     });
 
     walker.on('end', function () {
-        var out = 'module.exports = {',
+        var out = '',
             first = true;
 
+        out += 'module.exports = {';
         each(templates, function (path, templateFn) {
             out += (first ? '' : ',') + '\n"' + path + '": ' + templateFn;
             first = false;
         });
+        out += '};\n'
 
-        out += '};'
+        each(runtime, function (index, fn){
+            out += fn.toString() + '\n';
+        })
         output(out);
     });
 }

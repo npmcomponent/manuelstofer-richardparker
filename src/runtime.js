@@ -33,7 +33,7 @@ function each (obj, iterator) {
  * @param {String} path
  * @return {*}
  */
-function resolve (path) {
+function resolve (path, data) {
     var obj = data,
         parts = path.split(/\./);
 

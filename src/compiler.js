@@ -1,7 +1,7 @@
 'use strict';
 
 var runtime = require('./runtime.js'),
-    each = runtime.each;
+    each    = runtime.each;
 
 exports = module.exports = render;
 exports.compile = compile;
@@ -27,8 +27,8 @@ function render (str, data, options) {
  */
 function compile (input, options) {
     options = options || {};
-    var macros = options.macros || {},
-        tree = parse('out ' + input);
+    var macros  = options.macros || {},
+        tree    = parse('out ' + input, options);
 
     function transform (tree) {
 
@@ -39,10 +39,17 @@ function compile (input, options) {
             return macro(tree, transform);
         }
 
-        throw new Error('Not a macro:' + macroName);
+        throwError('Not a macro: "' + macroName + '"', options);
     }
 
-    return helper.wrapTemplate(transform(tree));
+    return helper.wrapTemplate(transform(tree), options);
+}
+
+function throwError(message, options) {
+    throw new Error(
+        message +
+        '\nFile: ' + options.file
+    );
 }
 
 /**
@@ -59,7 +66,7 @@ function compile (input, options) {
  * @param str
  * @return {Array}
  */
-function parse (str) {
+function parse (str, options) {
     var results = [''],
         current = results,
         stack = [],
@@ -82,7 +89,7 @@ function parse (str) {
         }
     }
     if (stack.length !== 0) {
-        throw new Error('Unmatched brace');
+        throwError('Unmatched curly bracket', options);
     }
     return results;
 }
@@ -103,7 +110,7 @@ var nativeMacros = {
      */
     '.': function (tree) {
         var path = helper.parsePath(tree);
-        return '__out.push(resolve(addToPath(path, "' + path + '")));';
+        return '__out.push(resolve(addToPath(path, "' + path + '"), data));';
     },
 
     /**
@@ -132,7 +139,7 @@ var nativeMacros = {
      */
     has: function (tree, transform) {
         var path = helper.parsePath(tree);
-        return  'if (typeof resolve(addToPath(path, "' + path + '")) !== "undefined") {\n' +
+        return  'if (typeof resolve(addToPath(path, "' + path + '"), data) !== "undefined") {\n' +
             helper.transformTree(tree, transform) + '\n' +
             '}';
     },
@@ -154,7 +161,7 @@ var nativeMacros = {
         var path = helper.parsePath(tree);
         return helper.keepPath(
             'path = addToPath(path, "' + path + '");\n' +
-            'each(resolve(path), function (__itemPath) {' +
+            'each(resolve(path, data), function (__itemPath) {' +
                 helper.keepPath('path = addToPath(path, __itemPath);' + helper.transformTree(tree, transform)) + '\n' +
             '});'
         );
@@ -264,12 +271,19 @@ var helper = {
      * @param code
      * @return {String}
      */
-    wrapTemplate: function (code) {
+    wrapTemplate: function (code, options) {
+        var runtimeCode = '',
+            includeRuntime = options.includeRuntime;
+
+        if (includeRuntime === true || includeRuntime === undefined) {
+            each(runtime, function (index, fn){
+                runtimeCode += fn.toString();
+            })
+        }
+
         return new Function('data',
             'var path = "", __out = [];\n data = data || {};\n' +
-                runtime.addToPath.toString() + '\n' +
-                runtime.resolve.toString() + '\n' +
-                runtime.each.toString() + '\n' +
+                runtimeCode +
                 code + '\n' +
                 'return __out.join("");'
         );
@@ -277,5 +291,3 @@ var helper = {
 };
 
 compile.helper = helper;
-
-
