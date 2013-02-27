@@ -99,6 +99,11 @@ describe('compile', function () {
         var template = compile('{path example}');
         template({}).should.equal('example');
     });
+
+    it('should allow to configure the initial path', function () {
+        var template = compile('{path .}');
+        template({}, {path: 'expected.path'}).should.equal('expected.path');
+    });
 });
 
 describe('fn', function () {

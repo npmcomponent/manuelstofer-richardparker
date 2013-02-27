@@ -100,10 +100,11 @@ module.exports = helper = {
         }
 
         return new Function('data', 'options',
-            'var path = "", __out = [];\n data = data || {};\n' +
-                runtimeCode +
-                code + '\n' +
-                'return __out.join("");'
+            'options = options || {}; ' +
+            'var path = options.path || "",\n__out = [];\n data = data || {};\n' +
+            runtimeCode +
+            code + '\n' +
+            'return __out.join("");'
         );
     }
 };
