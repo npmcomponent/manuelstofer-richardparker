@@ -6,6 +6,8 @@
     "scripts": [
         "index.js",
         "src/compiler.js",
-        "src/runtime.js"
+        "src/runtime.js",
+        "src/helper.js",
+        "src/macro.js"
     ]
 }
