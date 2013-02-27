@@ -52,6 +52,13 @@ function resolve (path, data) {
 }
 
 
+/**
+ * Extends the path
+ *
+ * @param path
+ * @param part
+ * @return {String}
+ */
 function addToPath (path, part) {
     path = String(path);
     part = String(part);

@@ -1,1 +1,1 @@
-module.exports = require('./src/compiler.js');
+module.exports = require('./src/compiler');

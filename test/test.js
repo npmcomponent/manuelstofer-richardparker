@@ -1,8 +1,11 @@
 /*global describe, it*/
-if (typeof render == 'undefined') {
-    var render = require('..'),
-        chai = require('chai');
+if (typeof parker == 'undefined') {
+    var parker  = require('..'),
+        chai    = require('chai');
 }
+
+var render  = parker.render,
+    compile = parker.compile;
 
 chai.should();
 
@@ -73,7 +76,7 @@ describe('each', function () {
 
 describe('->', function () {
 
-    describe('-> should move down in path', function () {
+    describe('move down in path', function () {
         var site = {person: {name: 'Thirsty'}};
 
         it('should resolve to the correct path', function () {
@@ -90,12 +93,47 @@ describe('->', function () {
     });
 });
 
+describe('compile', function () {
+
+    it('should return a template as javascript function', function () {
+        var template = compile('{path example}');
+        template({}).should.equal('example');
+    });
+});
+
+describe('fn', function () {
+
+    describe('call a user defined function', function () {
+        var options = {
+            fn: {
+                example1:  function () { return 'expected-output'; },
+                example2: function (path, data) {
+                    return path + data.foo
+                }
+            }
+        }
+
+        it('should get the path and data', function () {
+            var template = compile('{fn example1}', {});
+            template({}, options).should.equal('expected-output');
+        });
+
+        it('should render the output of the function', function () {
+           var template = compile('{-> expected- {fn example2}}', {});
+           template({foo: 'output'}, options).should.equal('expected-output');
+        });
+
+
+
+    });
+});
+
 describe('macros', function () {
 
     it('can add custom macro', function () {
         var macro = {
             'custom-macro': function () {
-                return render.compile.helper.output('foo');
+                return parker.helper.output('foo');
             }
         };
         render('{custom-macro}', {}, {macros: macro}).should.equal('foo');
@@ -104,10 +142,10 @@ describe('macros', function () {
     it('two macros can begin with the same name', function () {
         var macro = {
             'custom-macro': function () {
-                return render.compile.helper.output('foo');
+                return parker.helper.output('foo');
             },
             'custom-macro2': function () {
-                return render.compile.helper.output('foo2');
+                return parker.helper.output('foo2');
             }
         };
         render('{custom-macro}', {}, {macros: macro}).should.equal('foo');

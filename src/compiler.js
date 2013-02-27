@@ -3,8 +3,10 @@
 var runtime = require('./runtime.js'),
     each    = runtime.each;
 
-exports = module.exports = render;
-exports.compile = compile;
+module.exports = {
+    render:     render,
+    compile:    compile
+};
 
 /**
  * Render template a string with data
@@ -19,7 +21,7 @@ function render (str, data, options) {
 }
 
 /**
- * Compile a template to a Javascript
+ * Compile a template to a Javascript function
  *
  * @param {String} input
  * @param {Object} options
@@ -184,6 +186,14 @@ var nativeMacros = {
      */
     out: function (tree, transform) {
         return helper.transformTree(tree, transform);
+    },
+
+    /**
+     * Calls a user defined function
+     */
+    fn: function (tree) {
+        var fnName = helper.parsePath(tree);
+        return '__out.push(options.fn.' + fnName + '(path, data));';
     }
 };
 
@@ -281,7 +291,7 @@ var helper = {
             })
         }
 
-        return new Function('data',
+        return new Function('data', 'options',
             'var path = "", __out = [];\n data = data || {};\n' +
                 runtimeCode +
                 code + '\n' +
@@ -290,4 +300,4 @@ var helper = {
     }
 };
 
-compile.helper = helper;
+module.exports.helper = helper;
