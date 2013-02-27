@@ -5,6 +5,7 @@
     "keywords": ["template", "engine", "two", "way", "binding"],
     "scripts": [
         "index.js",
-        "runtime.js"
+        "src/compiler.js",
+        "src/runtime.js"
     ]
 }

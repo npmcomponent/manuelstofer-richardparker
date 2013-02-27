@@ -4,7 +4,7 @@ var program     = require('commander'),
     template    = require('..'),
     fs          = require('fs'),
     walk        = require('walk'),
-    each        = require('../runtime').each;
+    each        = require('../src/runtime').each;
 
 program
     .version(require('../package.json').version)
