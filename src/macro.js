@@ -15,7 +15,7 @@ module.exports = {
      */
     '.': function (tree) {
         var path = helper.parsePath(tree);
-        return '__out.push(resolve(addToPath(path, "' + path + '"), data));';
+        return '__out.push(resolve(data, addToPath(path, "' + path + '")));';
     },
 
     /**
@@ -44,7 +44,7 @@ module.exports = {
      */
     has: function (tree, transform) {
         var path = helper.parsePath(tree);
-        return  'if (typeof resolve(addToPath(path, "' + path + '"), data) !== "undefined") {\n' +
+        return  'if (typeof resolve(data, addToPath(path, "' + path + '")) !== "undefined") {\n' +
             helper.transformTree(tree, transform) + '\n' +
             '}';
     },
@@ -66,7 +66,7 @@ module.exports = {
         var path = helper.parsePath(tree);
         return helper.keepPath(
             'path = addToPath(path, "' + path + '");\n' +
-                'each(resolve(path, data), function (__itemPath) {' +
+                'each(resolve(data, path), function (__itemPath) {' +
                 helper.keepPath('path = addToPath(path, __itemPath);' + helper.transformTree(tree, transform)) + '\n' +
                 '});'
         );

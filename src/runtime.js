@@ -1,3 +1,4 @@
+var resolve = require('resolvr').resolve;
 
 module.exports = {
     each:       each,
@@ -26,31 +27,6 @@ function each (obj, iterator) {
         }
     }
 }
-
-/**
- * Runtime method: resolving a path in the data
- *
- * @param {String} path
- * @return {*}
- */
-function resolve (path, data) {
-    var obj = data,
-        parts = path.split(/\./);
-
-    if (path === '' || path === '.') {
-        return obj;
-    }
-
-    while (parts.length > 0 && obj[parts[0]]) {
-        obj = obj[parts[0]];
-        parts.shift();
-    }
-    if (parts.length > 0) {
-        return;
-    }
-    return obj;
-}
-
 
 /**
  * Extends the path
