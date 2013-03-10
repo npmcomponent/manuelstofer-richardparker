@@ -69,6 +69,7 @@ function throwError(message, options) {
  *    ]
  *
  * @param str
+ * @param options
  * @return {Array}
  */
 function parse (str, options) {

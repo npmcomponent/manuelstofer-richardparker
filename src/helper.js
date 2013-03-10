@@ -87,6 +87,7 @@ module.exports = helper = {
      * Wrap code into the template function
      *
      * @param code
+     * @param options
      * @return {String}
      */
     wrapTemplate: function (code, options) {
