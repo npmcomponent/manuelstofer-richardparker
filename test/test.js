@@ -93,6 +93,13 @@ describe('->', function () {
     });
 });
 
+describe('literal', function () {
+    it('should interpret content as text', function () {
+        var template = compile('{literal {  "some": "json"}}');
+        template({}).should.equal('{  "some": "json"}');
+    });
+});
+
 describe('compile', function () {
 
     it('should return a template as javascript function', function () {
@@ -127,9 +134,6 @@ describe('fn', function () {
            var template = compile('{-> expected- {fn example2}}', {});
            template({foo: 'output'}, options).should.equal('expected-output');
         });
-
-
-
     });
 });
 

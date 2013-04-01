@@ -73,9 +73,34 @@ module.exports = {
     },
 
     /**
+     * Outputs text
+     * for example:
+     * {literal {hello: bla}} -> {hello: bla}
+     *
+     * @param tree
+     * @return {String}
+     */
+    literal: function (tree) {
+
+        function rejoin (tree) {
+            var res = [];
+            for (var i = 0; i < tree.length; i++) {
+                var item = tree[i];
+                if (item instanceof Array) {
+                    item = '{' + rejoin(item) + '}';
+                }
+                res.push(item);
+            }
+            return res.join('');
+        }
+        return '__out.push("' + helper.escapeJS(rejoin(tree)) + '");';
+    },
+
+    /**
      * Outputs the current path
      * for example:
      * {each foo {path bar} } -> foo.0.bar foo.1.bar
+     *
      * @param tree
      * @return {String}
      */
