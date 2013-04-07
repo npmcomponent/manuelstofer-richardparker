@@ -1,10 +1,40 @@
-var resolve = require('resolvr').resolve;
 
 module.exports = {
     each:       each,
     resolve:    resolve,
-    addToPath:  addToPath
+    addToPointer:  addToPointer
 };
+
+
+/**
+ * Looksup a json pointer
+ *
+ * @param obj
+ * @param pointer
+ * @returns {*}
+ */
+function resolve (obj, pointer) {
+
+    var unescape = function (str) {
+            return str.replace(/~1/g, '/').replace(/~0/g, '~');
+        },
+        parse = function (pointer) {
+            if (pointer === '') { return []; }
+            if (pointer.charAt(0) !== '/') { throw new Error('Invalid JSON pointer:' + pointer); }
+            return pointer.substring(1).split(/\//).map(unescape);
+        },
+        tok,
+        refTokens = parse(pointer);
+
+    while (refTokens.length) {
+        tok = refTokens.shift();
+        if (!obj.hasOwnProperty(tok)) {
+            return;
+        }
+        obj = obj[tok];
+    }
+    return obj;
+}
 
 /**
  * Iterate over an object or array
@@ -29,20 +59,21 @@ function each (obj, iterator) {
 }
 
 /**
- * Extends the path
+ * Extends the pointer
  *
- * @param path
- * @param part
+ * @param pointer
+ * @param refToken
  * @return {String}
  */
-function addToPath (path, part) {
-    path = String(path);
-    part = String(part);
-    if (path === '' && part === '') {
-        return '.';
+function addToPointer (pointer, refToken) {
+    var escape = function (str) {
+        return str.replace(/~/g, '~0');
+    };
+    pointer = String(pointer);
+    refToken = escape(String(refToken));
+
+    if (refToken === '') {
+        return pointer;
     }
-    if (part === '.' || part === '') {
-        return path;
-    }
-    return path ? path + '.' + part : part;
+    return pointer.replace(/\/*$/, '/') + refToken.replace(/^\/+/, '');
 }

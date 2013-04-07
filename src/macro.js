@@ -14,27 +14,28 @@ module.exports = {
      * @return {String}
      */
     '.': function (tree) {
-        var path = helper.parsePath(tree);
-        return '__out.push(resolve(data, addToPath(path, "' + path + '")));';
+        var pointer = helper.parsePointer(tree);
+        return '__out.push(resolve(data, addToPointer(pointer, "' + pointer + '")));';
     },
 
     /**
-     * Moves down in path
-     * {-> person.name {path}} -> person.name
+     * Moves down in pointer
+     * {-> person.name {pointer}} -> person.name
+     *
      * @param tree
      * @param transform
      * @return {String}
      */
     '->': function (tree, transform) {
-        var path = helper.parsePath(tree);
-        return helper.keepPath(
-            'path = addToPath(path, "' + path + '");\n' +
+        var pointer = helper.parsePointer(tree);
+        return helper.keepPointer(
+            'pointer = addToPointer(pointer, "' + pointer + '");\n' +
                 helper.transformTree(tree, transform) + '\n'
         );
     },
 
     /**
-     * Checks if a path exists
+     * Checks if a pointer exists
      * for example:
      * {has title <h1>{. title}</h1>}
      *
@@ -43,8 +44,8 @@ module.exports = {
      * @return {String}
      */
     has: function (tree, transform) {
-        var path = helper.parsePath(tree);
-        return  'if (typeof resolve(data, addToPath(path, "' + path + '")) !== "undefined") {\n' +
+        var pointer = helper.parsePointer(tree);
+        return  'if (resolve(data, addToPointer(pointer, "' + pointer + '"))) {\n' +
             helper.transformTree(tree, transform) + '\n' +
             '}';
     },
@@ -63,11 +64,11 @@ module.exports = {
      * @return {String}
      */
     each: function (tree, transform) {
-        var path = helper.parsePath(tree);
-        return helper.keepPath(
-            'path = addToPath(path, "' + path + '");\n' +
-                'each(resolve(data, path), function (__itemPath) {' +
-                helper.keepPath('path = addToPath(path, __itemPath);' + helper.transformTree(tree, transform)) + '\n' +
+        var pointer = helper.parsePointer(tree);
+        return helper.keepPointer(
+            'pointer = addToPointer(pointer, "' + pointer + '");\n' +
+                'each(resolve(data, pointer), function (__itemPointer) {' +
+                helper.keepPointer('pointer = addToPointer(pointer, __itemPointer);' + helper.transformTree(tree, transform)) + '\n' +
                 '});'
         );
     },
@@ -97,16 +98,16 @@ module.exports = {
     },
 
     /**
-     * Outputs the current path
+     * Outputs the current pointer
      * for example:
-     * {each foo {path bar} } -> foo.0.bar foo.1.bar
+     * {each foo {pointer bar} } -> foo.0.bar foo.1.bar
      *
      * @param tree
      * @return {String}
      */
-    path: function (tree) {
-        var path = helper.parsePath(tree);
-        return '__out.push(addToPath(path, "' + path + '"));';
+    pointer: function (tree) {
+        var pointer = helper.parsePointer(tree);
+        return '__out.push(addToPointer(pointer, "' + pointer + '"));';
     },
 
     /**
@@ -120,7 +121,7 @@ module.exports = {
      * Calls a user defined function
      */
     fn: function (tree) {
-        var fnName = helper.parsePath(tree);
-        return '__out.push(options.fn.' + fnName + '(path, data));';
+        var fnName = helper.parsePointer(tree);
+        return '__out.push(options.fn.' + fnName + '(pointer, data));';
     }
 };

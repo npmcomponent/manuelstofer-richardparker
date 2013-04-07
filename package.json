@@ -6,8 +6,7 @@
     "author": "Manuel Stofer <manuel@takimata.ch>",
     "dependencies": {
         "commander": "*",
-        "walk":      "*",
-        "resolvr":   "*"
+        "walk": "*"
     },
     "devDependencies": {
         "mocha": "*",

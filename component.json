@@ -4,7 +4,6 @@
     "description": "Simple template engine for two way bindings",
     "keywords": ["template", "engine", "two", "way", "binding"],
     "dependencies": {
-        "manuelstofer/resolvr": "*"
     },
     "scripts": [
         "index.js",

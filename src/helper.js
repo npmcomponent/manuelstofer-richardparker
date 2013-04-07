@@ -24,7 +24,7 @@ module.exports = helper = {
         return arg;
     },
 
-    parsePath: function (tree) {
+    parsePointer: function (tree) {
         return helper.parseArg(tree) || '';
     },
 
@@ -72,15 +72,15 @@ module.exports = helper = {
     },
 
     /**
-     * Creates a closure for the path.
-     *  ->  Useful when modifying the current path in a macro
+     * Creates a closure for the pointer.
+     *  ->  Useful when modifying the current pointer in a macro
      *      so it not required to be restored after.
      *
      * @param {String} code
      * @return {String}
      */
-    keepPath: function (code) {
-        return '(function (path) {\n' + code + '\n}(path));';
+    keepPointer: function (code) {
+        return '(function (pointer) {\n' + code + '\n}(pointer));';
     },
 
     /**
@@ -102,7 +102,7 @@ module.exports = helper = {
 
         return new Function('data', 'options',
             'options = options || {}; ' +
-            'var path = options.path || "",\n__out = [];\n data = data || {};\n' +
+            'var pointer = options.pointer || "",\n__out = [];\n data = data || {};\n' +
             runtimeCode +
             code + '\n' +
             'return __out.join("");'

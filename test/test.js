@@ -18,7 +18,8 @@ describe('.', function () {
 
     it('should display an element of an array', function () {
         var site = {pages: ['about', 'news']};
-        render('{. pages.1}', site).should.equal('news');
+        render('{. pages/1}', site).should.equal('news');
+        render('{. /pages/1}', site).should.equal('news');
     });
 });
 
@@ -40,19 +41,19 @@ describe('has', function () {
     });
 });
 
-describe('path', function () {
+describe('pointer', function () {
     var site = {bar: [{foo: 3}]};
 
-    it('should output . for root', function () {
-        render('{path}', site).should.equal('.');
+    it('should output empty string for root', function () {
+        render('{pointer}', site).should.equal('');
     })
 
-    it('should output the correct path when called without each', function () {
-        render('{path bar}', site).should.equal('bar');
+    it('should output the correct pointer when called without each', function () {
+        render('{pointer bar}', site).should.equal('/bar');
     });
 
-    it('path should output the current path in the data structure', function () {
-        render('{each bar {path foo}}', site).should.equal('bar.0.foo');
+    it('pointer should output the current pointer in the data structure', function () {
+        render('{each bar {pointer foo}}', site).should.equal('/bar/0/foo');
     });
 });
 
@@ -67,20 +68,15 @@ describe('each', function () {
         var richard = {foo: {name: 'richard parker', age: 12}};
         render('{each foo {.} }', richard).should.equal('richard parker 12 ');
     });
-
-    it('should iterate over the root attributes of an object', function () {
-        var richard = {name: 'richard parker', age: 12};
-        render('{each . {.} }', richard).should.equal('richard parker 12 ');
-    });
 });
 
 describe('->', function () {
 
-    describe('move down in path', function () {
+    describe('move down in pointer', function () {
         var site = {person: {name: 'Thirsty'}};
 
-        it('should resolve to the correct path', function () {
-            render('{-> person.name {path}}', site).should.equal('person.name');
+        it('should resolve to the correct pointer', function () {
+            render('{-> person/name {pointer}}', site).should.equal('/person/name');
         });
 
         it('should resolve the correct value', function () {
@@ -88,7 +84,7 @@ describe('->', function () {
         });
 
         it('should resolve the correct values for {.}', function () {
-            render('{-> person.name {.}}', site).should.equal('Thirsty');
+            render('{-> person/name {.}}', site).should.equal('Thirsty');
         });
     });
 });
@@ -103,13 +99,13 @@ describe('literal', function () {
 describe('compile', function () {
 
     it('should return a template as javascript function', function () {
-        var template = compile('{path example}');
-        template({}).should.equal('example');
+        var template = compile('{pointer example}');
+        template({}).should.equal('/example');
     });
 
-    it('should allow to configure the initial path', function () {
-        var template = compile('{path .}');
-        template({}, {path: 'expected.path'}).should.equal('expected.path');
+    it('should allow to configure the initial pointer', function () {
+        var template = compile('{pointer}');
+        template({}, {pointer: '/expected/pointer'}).should.equal('/expected/pointer');
     });
 });
 
@@ -119,20 +115,20 @@ describe('fn', function () {
         var options = {
             fn: {
                 example1:  function () { return 'expected-output'; },
-                example2: function (path, data) {
-                    return path + data.foo
+                example2: function (pointer, data) {
+                    return pointer + data.foo
                 }
             }
         }
 
-        it('should get the path and data', function () {
+        it('should get the pointer and data', function () {
             var template = compile('{fn example1}', {});
             template({}, options).should.equal('expected-output');
         });
 
         it('should render the output of the function', function () {
            var template = compile('{-> expected- {fn example2}}', {});
-           template({foo: 'output'}, options).should.equal('expected-output');
+           template({foo: 'output'}, options).should.equal('/expected-output');
         });
     });
 });
@@ -169,7 +165,7 @@ describe('the example in readme.md', function () {
                 '{has fields ' +
                 '  <form> ' +
                 '    {each fields ' +
-                '      {. label}: <input type="text" x-bind="{path name}" value="{. name}"> ' +
+                '      {. label}: <input type="text" x-bind="{pointer name}" value="{. name}"> ' +
                 '    } ' +
                 '  </form>' +
                 '}',
@@ -183,8 +179,8 @@ describe('the example in readme.md', function () {
 
             output =
                 '<form> ' +
-                '  Hunter: <input type="text" x-bind="fields.0.name" value="Thirsty"> ' +
-                '  Tiger: <input type="text" x-bind="fields.1.name" value="Richard Parker"> ' +
+                '  Hunter: <input type="text" x-bind="/fields/0/name" value="Thirsty"> ' +
+                '  Tiger: <input type="text" x-bind="/fields/1/name" value="Richard Parker"> ' +
                 '</form>';
 
         render(template, data).replace(/\s/g, '').should.equal(output.replace(/\s/g, ''));
