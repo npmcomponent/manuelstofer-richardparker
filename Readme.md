@@ -55,8 +55,8 @@ Output:
 </form>
 ```
 
-In the example above pointer is used to generate a json pointer
-json pointer to the names. This is intended to be used for two way data bindings.
+In the example above {pointer} is used to generate a json pointer to the names.
+This is useful to create data bindings.
 
 
 ## Installation
