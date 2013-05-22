@@ -84,7 +84,7 @@ $ richardparker template.html       # compile template.html and output to stdout
 $ richardparker -a foo.html         # compile test.html and output as amd module
 ```
 
-### Javascript API:
+## API
 
 ```Javascript
 
@@ -98,7 +98,7 @@ var richard = require('richardparker'),
 
 ```
 
-### Extensibility
+## Extensibility
 
 New commands can be added quite easily as compile time marcros. To see how its done
 checkout the native macros like has, each and pointer.
