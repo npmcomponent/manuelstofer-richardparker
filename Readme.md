@@ -16,8 +16,8 @@ Richard Parker is a simple template engine designed for data binding with json p
 
 ## Demo
 
-There is a [demo](http://manuelstofer.github.com/richardparker/) that allows you to
-try Richard Parker templates.
+There is a interactive [demo](http://manuelstofer.github.com/richardparker/) that allows you to
+try Richard Parker templates in the web browser.
 
 
 Template:
