@@ -77,7 +77,7 @@ The package can be consumed as a [component](http://github.com/component/compone
 
 ### Command-line
 
-Richard Parker can compile templates to common js or optionally to amd modules.
+Richard Parker can compile templates to CommonJS or optionally to AMD modules.
 
 ```bash
 $ richardparker template.html       # compile template.html and output to stdout
