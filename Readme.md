@@ -52,7 +52,7 @@ Output:
 </form>
 ```
 
-In the example above {pointer} is used to generate a json pointer to the names.
+In the example above {pointer} is used to generate a JSON pointer to the names.
 This is useful to create data bindings.
 
 
