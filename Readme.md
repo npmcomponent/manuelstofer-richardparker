@@ -100,7 +100,7 @@ var richard = require('richardparker'),
 
 ## Extensibility
 
-New commands can be added quite easily as compile time marcros. To see how its done
+New commands can be added quite easily as compile time macros. To see how its done
 checkout the native macros like has, each and pointer.
 
 
