@@ -60,13 +60,13 @@ This is useful to create data bindings.
 
 Using npm
 
-```
+```bash
 $ npm install richardparker
 ```
 
 Using Component
 
-```
+```bash
 $ component install manuelstofer/richardparker
 ```
 
@@ -77,7 +77,7 @@ The package can be consumed as a [component](http://github.com/component/compone
 
 ### Command-line
 
-Richard Parker can compile templates to CommonJS or optionally to AMD modules.
+Richard Parker can compile templates to CommonJS or optionally to [AMD](http://en.wikipedia.org/wiki/Asynchronous_module_definition) modules.
 
 ```bash
 $ richardparker template.html       # compile template.html and output to stdout
@@ -101,7 +101,7 @@ var richard = require('richardparker'),
 ## Extensibility
 
 New commands can be added quite easily as compile time macros. To see how its done
-checkout the native macros like has, each and pointer.
+check out the native macros like has, each and pointer.
 
 
 
