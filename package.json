@@ -1,24 +1,13 @@
 {
-    "name": "richardparker",
-    "version": "0.6.0",
-    "description": "Simple template engine for two way bindings",
-    "keywords": ["template", "engine", "two", "way", "binding"],
-    "author": "Manuel Stofer <manuel@takimata.ch>",
-    "dependencies": {
-        "commander": "*",
-        "walk": "*"
-    },
-    "devDependencies": {
-        "mocha": "1.9.0",
-        "chai": "*",
-        "component": "*",
-        "mocha-phantomjs": "*"
-    },
-    "bin": {
-        "richardparker": "bin/richardparker.js"
-    },
-    "main": "index",
-    "scripts": {
-        "test": "make test"
-    }
+  "name": "manuelstofer-richardparker",
+  "description": "Simple template engine for two way bindings",
+  "version": "0.6.0",
+  "keywords": [
+    "template",
+    "engine",
+    "two",
+    "way",
+    "binding"
+  ],
+  "dependencies": {}
 }
